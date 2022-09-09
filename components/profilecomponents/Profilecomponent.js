@@ -63,10 +63,10 @@ function Profilecomponent() {
             This is the profile page, it shows Lens Protocol profile and a web2 profile. 
           </Heading>
           <Heading pl="20px" color="white" size="md" bg="black">
-            To proceed, click on "Save Profile and go to Town Square" button at the bottom 
+            To proceed, click on `Save Profile and go to Town Square` button at the bottom 
           </Heading>
-          <Heading color="white" as="h1" size="md" bg="black">
-          A separate part of this site is Sarah journey where a user of any other app can use.
+          <Heading pl="20px" color="white" as="h1" size="md" bg="black">
+          *A separate part of this site is Sarah journey where a user of any other app can use.
           Explore that capability
           <Button bg='black' fontSize='25px' onClick={redirectSarah} color="red">
             here

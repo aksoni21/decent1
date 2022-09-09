@@ -70,24 +70,24 @@ async function connecttocontract(){
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>Login</title>
       </Head>
       <Center h="50vh">
         <Stack align="center" bgColor="gray.600" p={5} rounded="3xl" boxShadow="lg" spacing={12}>
           <Box bgColor="blue.500" w="fit-content" p={5} rounded="3xl" boxShadow="md">
             <ChatIcon w="100px" h="100px" color="white" />
-          </Box>
+          </Box> */}
 
           {/* <Button boxShadow="md" onClick={()=>signInWithGoogle("",{prompt:"select_account"})}>Sign In with Google</Button> */}
-          <Button boxShadow="md" onClick={() => connectMetaMask()}>
+          <Button boxShadow="md" bg = 'blue.300'onClick={() => connectMetaMask()}>
             Connect with MetaMask
           </Button>
-          <Button boxShadow="md" onClick={() => test()}>
+        {/*  <Button boxShadow="md" onClick={() => test()}>
             test
           </Button>
-        </Stack>
-      </Center>
+         </Stack>
+      </Center> */}
     </>
   );
 }

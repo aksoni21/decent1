@@ -180,7 +180,7 @@ function Navbar() {
         </Container> */}
 
         <Flex justify="right" flex="1" align='end'>
-          <Link href="./blockchain_pages/whyBC">
+          <Link href="/blockchain_pages/whyBC">
             <Button bg="blue.300" justify="end" size="sm">
               How do we use Blockchain?
             </Button>

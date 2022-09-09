@@ -2,13 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Flex, Button, Link, Heading, Text, Box } from "@chakra-ui/react";
 import { ethers } from "ethers";
 import { localcontractaddress, mumbaicontractaddress } from "../../contractconfig";
+import ConnectWallet from "../../components/blockchain_comps/ConnectWallet";
 
 import ContractABI from "../../utils/abi/DeCentDate.json";
 import { useRouter } from "next/router";
-  
+
 function CreateRelation() {
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const contract = new ethers.Contract(mumbaicontractaddress, ContractABI.abi, provider.getSigner());
+  const contract = new ethers.Contract(
+    mumbaicontractaddress,
+    ContractABI.abi,
+    provider.getSigner()
+  );
   const router = useRouter();
 
   const [creator, setCreator] = useState([]);
@@ -19,8 +24,12 @@ function CreateRelation() {
   }, []);
 
   async function test() {
+    // alert('in test fx');
+    // const cprofile = await contract.testcreateProfile();
+    // console.log("cprofile--", cprofile);
     const profiles = await contract.fetchallprofiles();
-    // const profiles2 = await contract.createRelationship(profiles[2][0],profiles[3][0], 0, 0, 4, true);
+    console.log("profiles--", profiles);
+    // const profiles2 = await contract.createRelationship(profiles[2][0],profiles[3][0],0,0,4,true);
     // console.log("profiless--", profiles2);
     const relations = await contract.fetchallRelations();
     console.log("relations--", relations);
@@ -38,14 +47,21 @@ function CreateRelation() {
     router.push(`/blockchain_pages/veri`);
   }
 
+  function verifyWalletConnection() {
+    if (confirm("Please make sure to connect to MetaMask or a web3 wallet first") == true) {
+      test();
+    }
+  }
+
   return (
     <Flex direction="column">
-      <Button width="250px" bg="purple.500" onClick={test}>
-        Create Relationship NFT with this person
+      <ConnectWallet />
+      <Button width="300px" mt="20px" bg="purple.500" onClick={verifyWalletConnection}>
+        Create Relationship NFT with them
       </Button>
       <Text>creator: {creator[2]}</Text>
       <Text>partner: {partner[2]}</Text>
-      <Button width="250px" bg="purple.500" onClick={redirect}>
+      <Button width="300px" bg="purple.500" onClick={redirect}>
         Explore Sarah Journey
       </Button>{" "}
     </Flex>

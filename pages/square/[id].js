@@ -51,7 +51,7 @@ function Square() {
         >
           {/* {console.log('msg--',msg)} */}
           <Text>
-            <Link onClick={() => redirectProfile(user.uid)}>{msg.sender}:</Link> {msg.text}
+            <Link textDecoration='underline' onClick={() => redirectProfile(user.uid)}>{msg.sender}:</Link> {msg.text}
           </Text>
         </Flex>
       );
@@ -110,7 +110,9 @@ function Square() {
           {getMessages()}
 
           <div ref={bottomOfsquare}></div>
-          <Button bg='blue.100' onClick={()=>(alert('Under construction'))}>Create NFT of my above message on Polygon</Button>
+          <Text mt='20px'color='blue.500'>Click on Link above to create relationship NFT with this person</Text>
+
+          <Button mt='20px'bg='blue.100' onClick={()=>(alert('Under construction'))}>Create NFT of my above message on Polygon</Button>
 
         </Flex>
 

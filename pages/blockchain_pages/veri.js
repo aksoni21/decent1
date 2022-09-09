@@ -18,6 +18,7 @@ function Veri() {
 
   const [encphone, setEncPhone] = useState("");
   const [decphone, setDecPhone] = useState("empty");
+  const [partner, setPartner] = useState("none");
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -35,31 +36,48 @@ function Veri() {
 
   async function verify() {
     if (value) {
+      if (value.length != 10) {
+        console.log("Phone number must be 10 digits", value);
+        alert("Phone number must be 10 digits");
+        return;
+      }
+      console.log("passed value test 10 digits", value, value.length);
       const area = value.substring(0, 3);
       const remaining = value.substring(3, 10);
       setAreaCode(area);
       setNumber(remaining);
       // console.log("in verify change--", areacode, remaining, value);
-
+      const allprofs = await contract.fetchallprofiles();
+      // console.log('allprofs--',allprofs);
       const data = await contract.fetchallnumbers(area);
       console.log("data--", data);
 
       if (data[0][2].length) {
-        // console.log("in if data--", data);
+        // console.log("in if data--", data[0][2]);
         setEncPhone(data[0][2]);
         data.map(async (d) => {
           if (remaining === d[2]) {
-            console.log("d--", d[2], "--", d);
+            // console.log("d--", d[2], "--", d);
             const profId = d[0];
             const relId = d[3];
+            // console.log("Searched profiles--", profId.toString(),relId.toString());
             const c = await contract.fetchIndivProfile(profId);
-            console.log("Searched Number is--", c[0][2], "--", c[0][3]);
+            // console.log("Searched Number is--", c[0][2], "--", c[0][3],'--numbers--',c);
             const r = await contract.fetchIndivRelation(relId);
-            // console.log("in rel data--", profId, "--", relId, "--", r);
-            const partnerid = r[0][2];
+            // console.log("in rel data--", profId, "--", relId, "--", r,'--',c);
+            let partnerid = r[0][2];
+            console.log("ids--", profId, partnerid);
+            if (partnerid.toString() == profId.toString()) {
+              partnerid = r[0][1];
+            }
+            console.log("ids--", profId, partnerid);
             const p = await contract.fetchIndivProfile(partnerid);
-            console.log("Partner Info is-", p[0][2], "--", p[0][3]);
+            console.log("Partner Info is-", p[0][2], "--", p[0][3], "--numbers--", p);
+            const par=  p[0][2]+ " "+ p[0][3]
+            console.log('par--',par)
+            setPartner(par)
           } else {
+            setPartner('none')
             // console.log("no match found", remaining, d[2]);
           }
           // const decrypted = await decrypt(data[0][2]);//test
@@ -122,7 +140,10 @@ function Veri() {
         decides to come here, put in his number and make sure he is not married or in committed
         relationship with someone else.
       </Textarea>
-
+      <Text ml="20px" color="pink.500">
+        {" "}
+        In production, these numbers would be encrypted to ensure privacy
+      </Text>
       <Flex
         w="300px"
         h="100%"
@@ -137,8 +158,8 @@ function Veri() {
           <Button m={5} p={4} onClick={() => verify()}>
             Check
           </Button>
-          <Text>Value: {value}</Text>
-          <Text onClick={() => decrypt(encphone)}>Value: {decphone}</Text>
+          {/* <Text>Value: {value}</Text> */}
+          <Text onClick={() => decrypt(encphone)}>Partner found: {partner}</Text>
         </Flex>{" "}
       </Flex>
     </Flex>
