@@ -146,23 +146,43 @@ import { auth } from "../firebaseconfig";
 import { BsSuitClub } from "react-icons/bs";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
 
 function Navbar() {
-  const isDesktop = useBreakpointValue({ base: false, sm: true });
+  // const isDesktop = useBreakpointValue({ base: false, sm: true });
   const [user, loading, error] = useAuthState(auth);
+  const router = useRouter();
+
+  function redirecttoWhy() {
+    if (user) {
+      router.push(`/blockchain_pages/whyBC`);
+    } else {
+      alert("For this POC, please login at the bottom first");
+    }
+  }
+  function redirecttoHome() {
+    console.log('redirect to home');
+    router.push(`/`);
+  }
 
   return (
     // <Box as="section" bg='purple.500' pb={{ base: "1", md: "24" }}>
-    <Box as="nav" bg="tomato" boxShadow={useColorModeValue("sm", "sm-dark")}>
-      <Flex p="2" direction="row" justify="space-between">
-        {/* <Container py={{ base: "1", lg: "5" }}>
-          <HStack spacing="1"> */}
-        <Flex>
+    <Box
+      pb="25px"
+      as="nav"
+      bg="black"
+      color="blue.500"
+      boxShadow={useColorModeValue("sm", "sm-dark")}
+    >
+      <Flex p={[1,2,3]} direction="row" justify="space-between" w={[380, 700, 800,1000]}>
+        {/* <Container w={[300, 1400, 1500]}> */}
+       {/*    <HStack spacing="1"> */}
+        <Flex w={[120, 300, 300,300]} >
           <Link href="/">
             <BsSuitClub size={40} />
           </Link>
           <Link href="/" ml="3">
-            <Text fontSize="30px">DeCent Date</Text>
+            <Text fontSize={{ base: '20px', md: '30px' }}>DeCent Date</Text>
           </Link>
         </Flex>
         {/* {isDesktop ? (
@@ -176,26 +196,34 @@ function Navbar() {
               <Link href="/general/faq">How it works</Link>
             </Flex>
           )} */}
-        {/* </HStack>
-        </Container> */}
+        {/* </HStack> */}
 
-        <Flex justify="right" flex="1" align='end'>
-          <Link href="/blockchain_pages/whyBC">
-            <Button bg="blue.300" justify="end" size="sm">
-              How do we use Blockchain?
-            </Button>
-          </Link>
-        </Flex>
+         <Flex justify="center"  align="center">
+          <Button bg="blue.300" color="black" justify="end" size="sm" onClick={redirecttoWhy}>
+            Blockchain Uses
+          </Button>
+        </Flex> 
 
         {user ? (
-          <Flex justify="right" flex="1" align='end'>
-            <Button bg="blue.300" justify="end" size="sm" onClick={() => signOut(auth)}>
+          <Flex justify="right"  align="center">
+            <Button
+              bg="blue.300"
+              justify="end"
+              color="black"
+              size="sm"
+              onClick={() => {
+                redirecttoHome();
+                signOut(auth);
+              }}
+            >
               Sign Out
             </Button>
           </Flex>
         ) : (
           <Flex justify="space-evenly" flex="1"></Flex>
         )}
+        {/* </Container>  */}
+
       </Flex>
     </Box>
   );

@@ -1,6 +1,17 @@
 import React from "react";
-import { Flex, Text, Heading } from "@chakra-ui/layout";
-import { Link, Input, FormControl, Button } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  Heading,
+  Center,
+  useBreakpointValue,
+  Link,
+  Input,
+  FormControl,
+  Wrap,
+  WrapItem,
+  Button,
+} from "@chakra-ui/react";
 import { Avatar } from "@chakra-ui/avatar";
 import TS_Sidebar from "../../components/townsquarecomponents/TS_Sidebar";
 import Head from "next/head";
@@ -13,6 +24,7 @@ import getOtherEmail from "../../utils/utility";
 import Topbar from "../../components/chat/Topbar";
 import Bottombar from "../../components/townsquarecomponents/TS_Bottombar";
 import { useRef, useEffect } from "react";
+import ScreenSize from "../../components/ScreenSize";
 
 function Square() {
   const router = useRouter();
@@ -20,6 +32,7 @@ function Square() {
   const [user] = useAuthState(auth);
   console.log("user in square--", user);
   const bottomOfsquare = useRef();
+  const isDesktop = useBreakpointValue({ base: false, sm: true });
 
   const q = query(collection(db, `squares/${id}/messages`), orderBy("timestamp"));
   //   const q = query(collection(db, `chats/${id}/messages`), orderBy("timestamp"));
@@ -34,6 +47,13 @@ function Square() {
   const cha = [chats];
   const sna = [snapshot];
   console.log("query--", id, "--", "m--", m, "s--", s, "--ch", cha, "--snap", sna);
+  const cleanupemail = (em) => {
+    const searchTerm = "@";
+    const indexOfFirst = em.indexOf(searchTerm);
+    const result = em.substring(0, indexOfFirst);
+    return result;
+  };
+
   const getMessages = () =>
     messages?.map((msg) => {
       //   const sender = msg.sender === user.email;
@@ -51,15 +71,17 @@ function Square() {
         >
           {/* {console.log('msg--',msg)} */}
           <Text>
-            <Link textDecoration='underline' onClick={() => redirectProfile(user.uid)}>{msg.sender}:</Link> {msg.text}
+            <Link textDecoration="underline" onClick={() => redirectProfile(user.uid)}>
+              {cleanupemail(msg.sender)}:
+            </Link>{" "}
+            {msg.text}
           </Text>
         </Flex>
       );
     });
 
   function redirectProfile(id) {
-    console.log("profile redirect--", id);
-    router.push(`/profiles/profile`);
+    router.push("/profiles/profile/");
   }
 
   const chatlist = () => {
@@ -96,26 +118,48 @@ function Square() {
     // });
     //   }
   }, [messages]);
-
   return (
     <Flex h="100vh">
       <Head>
-        <title>ts id page </title>
+        <title>DeCent Date</title>
       </Head>
 
       <TS_Sidebar />
-      <Flex flex={1} direction="column">
+      <Flex w="50%" flex={1} direction="column">
         <Topbar email={id} />
         <Flex flex={1} direction="column" pt={4} mx={5} overflowX="scroll">
           {getMessages()}
-
           <div ref={bottomOfsquare}></div>
-          <Text mt='20px'color='blue.500'>Click on Link above to create relationship NFT with this person</Text>
 
-          <Button mt='20px'bg='blue.100' onClick={()=>(alert('Under construction'))}>Create NFT of my above message on Polygon</Button>
-
+          <Text mt="20px" color="blue.500">
+            Click on a user above to create relationship NFT with this person
+          </Text>
+          {isDesktop ? (
+            <Button
+              wordBreak="break-word"
+              overflowWrap="break-word"
+              flexWrap="wrap"
+              mt="20px"
+              h={[20, 100]}
+              bg="blue.100"
+              onClick={() => alert("Under construction")}
+            >
+              Create NFT of my above message on Polygon
+            </Button>
+          ) : (
+            <Button
+              wordBreak="break-word"
+              overflowWrap="break-word"
+              flexWrap="wrap"
+              mt="20px"
+              h={[20, 100]}
+              bg="blue.100"
+              onClick={() => alert("Under construction")}
+            >
+              Create Message NFT
+            </Button>
+          )}
         </Flex>
-
         <Bottombar id={id} user={user} />
       </Flex>
     </Flex>

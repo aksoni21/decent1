@@ -23,6 +23,7 @@ import {
   EmailAuthProvider,
   signInWithPopup,
   signInWithPhoneNumber,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { useRouter } from "next/router";
 import Explore from "./Explore";
@@ -48,6 +49,7 @@ function Login() {
   const router = useRouter();
   const [lenshandle, setLensHandle] = useState("");
   const [lensprofile, setLensProfile] = useState([]);
+  const [account, setAccount] = useState("");
 
   // #firebase Code
   const signInWithTwitter = () => {
@@ -79,6 +81,25 @@ function Login() {
     console.log("in sign in with email--");
     const user1 = await signInWithEmailAndPassword(auth, "test1@gmail.com", "test1@");
     console.log("user1--", user1);
+  };
+  const signInWithWallet = async () => {
+    // e.preventDefault();
+
+    console.log("in sign in with wallet email--");
+    const em = account + "@bcwallet.com";
+    const pin = "83Esl!34";
+    console.log("em, pin--", em, pin);
+    let user1;
+    try {
+      user1 = await signInWithEmailAndPassword(auth, em, pin);
+      console.log("wallet signin user1 --", user1);
+
+      console.log("userf1--", user1);
+    } catch (error) {
+      console.log("error--", error);
+      user1 = await createUserWithEmailAndPassword(auth, em, pin);
+      console.log("userf1--", user1);
+    }
   };
   async function addUser(_user, _name) {
     //firestore profile
@@ -113,6 +134,14 @@ function Login() {
       const signer = provider.getSigner();
       console.log("in walletconnect--", provider, "---", signer);
       // alert("You are connected");
+      const acc = await signer.getAddress();
+      setAccount(acc);
+      console.log("account--", account);
+      if (account) {
+        signInWithWallet();
+      } else {
+        console.log("no account");
+      }
     } catch (error) {
       console.log("error--", error);
     }
@@ -128,7 +157,7 @@ function Login() {
 
   async function lensConn() {
     try {
-      alert("Only Google and Twitter Sign-In work for this POC");
+      alert("Lens Protocol connection is still under construction");
       //   const l = "lens";
       //   // const response = await client.query(getindivProfile, { id: "0x7bfe" }).toPromise();
       //   console.log("lens handle--", lenshandle);
@@ -197,30 +226,27 @@ function Login() {
       <Head>
         <title>DeCent Date</title>
       </Head>
-      <Center h="100vh">
+      <Center h="100vh" bg="green.700">
         <Stack align="center" bgColor="gray.600" p={5} rounded="3xl" boxShadow="lg" spacing={5}>
           <Box bgColor="blue.500" w="fit-content" p={5} rounded="3xl" boxShadow="md">
             <ChatIcon w="100px" h="100px" color="white" />
           </Box>
-          <Text color="white" fontSize="15px">
-            For this POC, you can sign in with Test, Google or Twitter only{" "}
-          </Text>
           {/* <Button boxShadow="md" onClick={()=>signInWithGoogle("",{prompt:"select_account"})}>Sign In with Google</Button> */}
-          <Button boxShadow="md" onClick={() => test()}>
-            Login with Test User
+          <Button boxShadow="md" bg="blue.300" onClick={() => test()}>
+            Login as Test User
           </Button>
-          <Button boxShadow="md" onClick={() => signInWithGoogle()}>
-            Sign In with Google
-          </Button>
-          <Button boxShadow="md" onClick={() => signInWithTwitter()}>
-            Sign In with Twitter
-          </Button>
-          <Button boxShadow="md" onClick={() => lensConn()}>
-            Connect with Lens Protocol Profile
+          <Button boxShadow="md" bg="blue.300" onClick={() => wallconn()}>
+            Sign In with a Blockchain Wallet
           </Button>
 
-          <Button boxShadow="md" onClick={() => wallconn()}>
-            Sign In with Blockchain Wallet
+          <Button boxShadow="md" bg="blue.300" onClick={() => signInWithGoogle()}>
+            Sign In with Google
+          </Button>
+          <Button boxShadow="md" bg="blue.300" onClick={() => signInWithTwitter()}>
+            Sign In with Twitter
+          </Button>
+          <Button boxShadow="md" bg="blue.300" onClick={() => lensConn()}>
+            Connect with Lens Protocol Profile
           </Button>
         </Stack>
       </Center>

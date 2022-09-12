@@ -7,8 +7,11 @@ import Explore from "../components/Explore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebaseconfig";
 import ProfileComponent from "../components/profilecomponents/Profilecomponent";
+import ProfileComponent2 from "../components/profilecomponents/Profilecomponent2";
+import ProfileComponent3 from "../components/profilecomponents/Profilecomponent3";
 import Landing from "../components/landing/Landing";
 import Navbar from "../components/Navbar";
+import ScreenSize from "../components/ScreenSize";
 
 export default function Home() {
   return (
@@ -18,8 +21,13 @@ export default function Home() {
       </Head>
       {/* <Text>Index page</Text> */}
       <Navbar />
-      <Flex direction="row" justify="center">
+      {/* <ScreenSize /> */}
+      <Flex direction="column" justify="center">
         <ProfileComponent />
+        <Flex direction="column">
+          <ProfileComponent2 />
+          <ProfileComponent3 />
+        </Flex>
       </Flex>
     </Flex>
   );

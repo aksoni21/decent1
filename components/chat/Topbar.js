@@ -12,6 +12,10 @@ export default function Topbar({ email }) {
     console.log("profile redirect--", id);
     router.push(`/profiles/profile`);
   }
+  function redirecttoHome() {
+    console.log("redirect to home");
+    router.push(`/`);
+  }
 
   return (
     <Flex
@@ -25,14 +29,22 @@ export default function Topbar({ email }) {
     >
       <Flex>
         <Link onClick={() => redirectProfile(user.uid)}>
-          <Avatar src="" marginEnd={3} />
+          <Avatar src="https://www.stonedsanta.in/wp-content/uploads/2019/07/SriPriyatham-Caricature-artist-digital-illustrations-stoned-santa-Mark.jpg" marginEnd={3} />
         </Link>
 
         <Link onClick={() => redirectProfile(user.uid)}>
-          <Heading size="lg">{email}</Heading>
+          <Heading fontSize={[0,30]}>{email}</Heading>
         </Link>
       </Flex>
-      <Button bg='blue.300' justify="end" size="sm" onClick={() => signOut(auth)}>
+      <Button
+        bg="blue.300"
+        justify="end"
+        f="sm"
+        onClick={() => {
+          redirecttoHome();
+          signOut(auth);
+        }}
+      >
         Sign Out
       </Button>
     </Flex>

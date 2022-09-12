@@ -40,6 +40,7 @@ function CreateRelation() {
     console.log("members--", relCreator, relPartner);
     setCreator(relCreator[0]);
     setPartner(relPartner[0]);
+    alert('Relationship created. Click on Explore Sarah Journey')
   }
 
   function redirect() {
@@ -54,14 +55,16 @@ function CreateRelation() {
   }
 
   return (
-    <Flex direction="column">
+    <Flex direction="column" width='300px'>
+      <Button  align='center' justify='center' mt="20px"  mb="20px" bg="blue.300" >
+        Start a Space with this peron
+      </Button>
       <ConnectWallet />
-      <Button width="300px" mt="20px" bg="purple.500" onClick={verifyWalletConnection}>
+      <Button mt="20px" bg="purple.500" onClick={verifyWalletConnection}>
         Create Relationship NFT with them
       </Button>
-      <Text>creator: {creator[2]}</Text>
-      <Text>partner: {partner[2]}</Text>
-      <Button width="300px" bg="purple.500" onClick={redirect}>
+      
+      <Button  mt="20px" bg="purple.500" onClick={redirect}>
         Explore Sarah Journey
       </Button>{" "}
     </Flex>

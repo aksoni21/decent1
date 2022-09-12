@@ -69,7 +69,7 @@ function TS_Sidebar() {
   }
 
   return (
-    <Flex w="300px" h="100%" borderEnd="1px solid" borderColor="gray.200" direction="column">
+    <Flex w={[150,300]} h="100%" borderEnd="1px solid" borderColor="gray.200" direction="column">
       <Flex
         h="79px"
         w="100%"
@@ -96,6 +96,7 @@ function TS_Sidebar() {
         Squares you follow:
         <br />
         {squarelist()}
+        
       </Flex>
     </Flex>
   );

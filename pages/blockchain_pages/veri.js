@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// Chakra UI
 import { IconButton } from "@chakra-ui/button";
 import { Avatar } from "@chakra-ui/avatar";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
@@ -9,7 +8,6 @@ import { ethers } from "ethers";
 import { localcontractaddress, mumbaicontractaddress } from "../../contractconfig";
 import Navbar from "../../components/Navbar";
 import ContractABI from "../../utils/abi/DeCentDate.json";
-// import { async } from "@firebase/util";
 
 function Veri() {
   const [value, setValue] = useState("");
@@ -73,11 +71,11 @@ function Veri() {
             console.log("ids--", profId, partnerid);
             const p = await contract.fetchIndivProfile(partnerid);
             console.log("Partner Info is-", p[0][2], "--", p[0][3], "--numbers--", p);
-            const par=  p[0][2]+ " "+ p[0][3]
-            console.log('par--',par)
-            setPartner(par)
+            const par = p[0][2] + " " + p[0][3];
+            console.log("par--", par);
+            setPartner(par);
           } else {
-            setPartner('none')
+            setPartner("none");
             // console.log("no match found", remaining, d[2]);
           }
           // const decrypted = await decrypt(data[0][2]);//test
@@ -128,7 +126,6 @@ function Veri() {
     // console.log("in create Alice--", alice_keypair);
     return alice_keypair;
   }
-  //http://localhost:3000/blockchain_pages/veri
 
   return (
     <Flex direction="column">
@@ -141,7 +138,6 @@ function Veri() {
         relationship with someone else.
       </Textarea>
       <Text ml="20px" color="pink.500">
-        {" "}
         In production, these numbers would be encrypted to ensure privacy
       </Text>
       <Flex
@@ -153,14 +149,13 @@ function Veri() {
         direction="column"
       >
         <Flex align="center" direction="column">
-          <Text>Phone number you want to find</Text>
-          <Input placeholder="Number.." value={value} onChange={handleChange} />
+          <Text>Input 7701234560 as phone number</Text>
+          <Input placeholder="7701234560.." value={value} onChange={handleChange} />
           <Button m={5} p={4} onClick={() => verify()}>
             Check
           </Button>
-          {/* <Text>Value: {value}</Text> */}
           <Text onClick={() => decrypt(encphone)}>Partner found: {partner}</Text>
-        </Flex>{" "}
+        </Flex>
       </Flex>
     </Flex>
   );

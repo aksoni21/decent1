@@ -30,27 +30,30 @@ function Landing() {
   const router = useRouter();
 
   function redirect() {
-    if(user){
-    router.push(`/blockchain_pages/veri`);
-  }else{alert('For this POC, please login at the bottom first')}}
+    if (user) {
+      router.push("/blockchain_pages/veri");
+    } else {
+      alert("For this POC, please login at the bottom first");
+    }
+  }
   return (
     <Flex direction="column">
       {/* <Flex class="fcontainer">Hello From Landing</Flex> */}
       <Flex w="100%" borderEnd="1px solid" borderColor="gray.200" direction="column">
         <Navbar />
-        <Heading color="white" size="xl" bg="black">
-          Welcome to first Blockchain based dating/social media site.{" "}
-        </Heading>
-        <Heading color="white" as="h1" size="md" bg="black">
+        <Text pl='20px' color="white" fontSize="25px" bg="black">
+          Welcome to the first Blockchain based dating site.{" "}
+        </Text>
+        <Text pl='20px'color="white" f="md" bg="black">
           Our approach is to emulate real life and foster natural conversations
-        </Heading>
-        <Heading color="white" as="h1" size="md" bg="black">
-          A separate part of this site is Sarah journey where a user of any other app can use.
+        </Text>
+        <Text pl='20px'color="white" f="md" bg="black">
+          A separate part of DeCent Date is Sarah journey where a user of any other app can use our verify feature.
           Explore that capability
-          <Button bg='black' fontSize='25px' onClick={redirect} color="red">
+          <Button bg='black' p='0' f='md' color="red" onClick={redirect}>
             here
           </Button>
-        </Heading>
+        </Text>
       </Flex>
 
       <Flex>

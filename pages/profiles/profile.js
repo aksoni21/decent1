@@ -1,19 +1,26 @@
 import { useState, useEffect } from "react";
-import { Flex } from "@chakra-ui/react";
-import Navbar from '../../components/Navbar';
-import Profilecomponent from '../../components/profilecomponents/Profilecomponent';
+import { Button, Flex } from "@chakra-ui/react";
+import Navbar from "../../components/Navbar";
+import Profilecomponent4 from "../../components/profilecomponents/Profilecomponent4";
+import Profilecomponent5 from "../../components/profilecomponents/Profilecomponent5";
+import Profilecomponent6 from "../../components/profilecomponents/Profilecomponent6";
 import CreateRelation from "../../components/blockchain_comps/CreateRelation";
 
-function Profile() {
+function Profile({useremail}) {
+  console.log('useremail--',useremail);
 
   return (
     <Flex direction="column">
       <Navbar />
-      <Profilecomponent />
+      {useremail}
+      <Profilecomponent4 />
       
-      <Flex mt="20px" justify="center" align="center">
+      <Profilecomponent5 />
+      
+      <Flex pt="20px" pb="20px" justify="center" align="center" bg="beige">
         <CreateRelation />
       </Flex>
+      <Profilecomponent6 />
     </Flex>
   );
 }
