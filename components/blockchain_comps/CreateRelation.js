@@ -8,7 +8,11 @@ import ContractABI from "../../utils/abi/DeCentDate.json";
 import { useRouter } from "next/router";
 
 function CreateRelation() {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  
+  const rpcEndpoint = "https://rpc-mumbai.matic.today"; //mumbai
+  const provider = new ethers.providers.JsonRpcProvider(rpcEndpoint); //mumbai
+     
+  // const provider = new ethers.providers.Web3Provider(window.ethereum);
   const contract = new ethers.Contract(
     mumbaicontractaddress,
     ContractABI.abi,

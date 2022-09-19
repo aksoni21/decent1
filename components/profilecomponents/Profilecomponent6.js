@@ -53,8 +53,8 @@ function Profilecomponent6() {
             height="60px"
           />
           <Text>@test1</Text>
-          <Text>{lensprofile.bio}</Text>
-          {lensprofile.stats ? (
+          <Text>Bio: {lensprofile.bio}</Text>
+          <Text>Lens stats:</Text>{lensprofile.stats ? (
             <div>
               <Text>
                 {lensprofile.stats.totalFollowers} followers; {lensprofile.stats.totalFollowing}{" "}

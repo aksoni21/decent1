@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { IconButton } from "@chakra-ui/button";
-import { Avatar } from "@chakra-ui/avatar";
-import { ArrowLeftIcon } from "@chakra-ui/icons";
 import { Flex, Text, Textarea, Button, Input } from "@chakra-ui/react";
-
 import { ethers } from "ethers";
-import { localcontractaddress, mumbaicontractaddress } from "../../contractconfig";
+import { mumbaicontractaddress } from "../../contractconfig";
 import Navbar from "../../components/Navbar";
 import ContractABI from "../../utils/abi/DeCentDate.json";
+import ConnectWallet from "../../components/blockchain_comps/ConnectWallet";
 
 function Veri() {
+  console.log("in veri1--");
   const [value, setValue] = useState("");
   const [areacode, setAreaCode] = useState("");
   const [number, setNumber] = useState("");
@@ -17,21 +15,29 @@ function Veri() {
   const [encphone, setEncPhone] = useState("");
   const [decphone, setDecPhone] = useState("empty");
   const [partner, setPartner] = useState("none");
-
+  console.log("in veri2--");
   const handleChange = (event) => {
     setValue(event.target.value);
   };
-
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  console.log("in veriA--");
+  
+  const rpcEndpoint = "https://rpc-mumbai.matic.today"; //mumbai
+  const provider = new ethers.providers.JsonRpcProvider(rpcEndpoint); //mumbai
+     console.log("in veriF--");
   // console.log('provider--',provider);
+  console.log("in veriB--");
+  console.log("in veriC--", mumbaicontractaddress);
+  console.log("in veriD--", provider);
+  console.log("in veriE--", provider.getSigner());
   const contract = new ethers.Contract(
     mumbaicontractaddress,
     ContractABI.abi,
     provider.getSigner()
   );
-
+  
+ 
   const EthCrypto = require("eth-crypto");
-
+  console.log("in veri3--");
   async function verify() {
     if (value) {
       if (value.length != 10) {
@@ -113,7 +119,7 @@ function Veri() {
       console.log("in decrypt, no number found");
     }
   }
-
+  console.log("in veri4--");
   function createAlice() {
     const alice_keypair = {};
 
@@ -130,6 +136,7 @@ function Veri() {
   return (
     <Flex direction="column">
       <Navbar />
+      {console.log("in veri5--")}
       <Textarea>
         This is completely separate from DeCentDate. Anyone can come to this site and use its
         functionality. Suppose Sarah is on Bumble and she found a cute guy that she has been texting
@@ -140,6 +147,7 @@ function Veri() {
       <Text ml="20px" color="pink.500">
         In production, these numbers would be encrypted to ensure privacy
       </Text>
+      <ConnectWallet />
       <Flex
         w="300px"
         h="100%"
@@ -154,9 +162,12 @@ function Veri() {
           <Button m={5} p={4} onClick={() => verify()}>
             Check
           </Button>
+
           <Text onClick={() => decrypt(encphone)}>Partner found: {partner}</Text>
         </Flex>
       </Flex>
+      {/* {console.log("in veri8--")} */}
+      Veri Page
     </Flex>
   );
 }

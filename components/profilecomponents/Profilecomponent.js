@@ -29,6 +29,12 @@ function Profilecomponent() {
   }else{alert('For this POC, please login at the bottom first')}}
   
 
+  function redirectSarah2() {
+    if(user){
+    router.push("/blockchain_pages/veri_copy");
+  }else{alert('For this POC, please login at the bottom first')}}
+  
+
   return (
     <Flex  direction="column">
           <Text pl='20px' color="white" fontSize="25px" bg="black">
@@ -43,6 +49,7 @@ function Profilecomponent() {
           <Button bg='black' p='0' f='md' onClick={redirectSarah} color="red">
             here
           </Button>
+          
           </Text>
       </Flex>
   );

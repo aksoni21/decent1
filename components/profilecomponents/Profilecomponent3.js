@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import {
-  Image,
-  Flex,
-  Button,
-  Link,
-  Heading,
-  Text,
-  Textarea,
-  Box,
-  IconButton,
-} from "@chakra-ui/react";
+import { Image, Flex, Button, Link, Heading, Text } from "@chakra-ui/react";
 import { client, recommendProfiles, getProfilebyHandle } from "../../lens_api";
 import { FaTwitter, FaTelegram } from "react-icons/fa";
-// import CreateRelation from "../../components/blockchain_comps/CreateRelation";
+import Location from "../townsquarecomponents/Location";
 
 import { auth } from "../../firebaseconfig";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -48,6 +38,10 @@ function Profilecomponent3() {
       console.log(err);
     }
   }
+
+  function getLocation() {
+    alert("in get location");
+  }
   function redirect() {
     // console.log("profile redirect--", id);
     router.push(`/square/Mainstage`);
@@ -73,13 +67,12 @@ function Profilecomponent3() {
         bg="green.700"
         width="100vw"
       >
-        
         <Flex width="50%" align="center" justify="left" direction="column">
           <Heading as="h1" fontSize={[15, 25]}>
-            Web3(Lens Protocol) 
+            Web3(Lens Protocol)
           </Heading>
           <Heading as="h1" fontSize={[18, 30]}>
-          {lensprofile.name}
+            {lensprofile.name}
           </Heading>
         </Flex>
         <Flex width="50%" direction="column">
@@ -92,9 +85,11 @@ function Profilecomponent3() {
           <Text>@{lensprofile.handle}</Text>
           <Text>{lensprofile.bio}</Text>
           {lensprofile.stats ? (
-            <div >
-              <Text>{lensprofile.stats.totalFollowers} followers;  {lensprofile.stats.totalFollowing} following</Text>
-              
+            <div>
+              <Text>
+                {lensprofile.stats.totalFollowers} followers; {lensprofile.stats.totalFollowing}{" "}
+                following
+              </Text>
             </div>
           ) : (
             <div style={{ width: "60px", height: "60px", backgroundColor: "crimson" }}></div>
@@ -120,9 +115,15 @@ function Profilecomponent3() {
           </Flex>
         </Flex>
       </Flex>
-      <Flex h='200px' pt="10px" justify="center" bg='black' >
+      <Flex h="200px" pt="10px" justify="center" bg="black">
         <Button bg="blue.300" onClick={redirect}>
           Save Profile and go to Town Square
+        </Button>
+      </Flex>
+      <Flex h="200px" pt="10px" justify="center" bg="black">
+<Location/>
+        <Button bg="blue.300" onClick={getLocation}>
+          Get Location
         </Button>
       </Flex>
     </Flex>

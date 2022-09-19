@@ -71,7 +71,7 @@ function Square() {
         >
           {/* {console.log('msg--',msg)} */}
           <Text>
-            <Link textDecoration="underline" onClick={() => redirectProfile(user.uid)}>
+            <Link textDecoration="underline" onClick={redirectProfile}>
               {cleanupemail(msg.sender)}:
             </Link>{" "}
             {msg.text}
@@ -80,7 +80,7 @@ function Square() {
       );
     });
 
-  function redirectProfile(id) {
+  function redirectProfile() {
     router.push("/profiles/profile/");
   }
 
@@ -140,7 +140,7 @@ function Square() {
               overflowWrap="break-word"
               flexWrap="wrap"
               mt="20px"
-              h={[20, 100]}
+              h={[20, 50]}
               bg="blue.100"
               onClick={() => alert("Under construction")}
             >

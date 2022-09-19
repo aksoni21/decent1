@@ -8,7 +8,7 @@ import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
-import { contractaddress } from "../../contractconfig";
+import { mumbaicontractaddress } from "../../contractconfig";
 import ContractABI from "../../utils/abi/DeCentDate.json";
 
 function ConnectWallet() {
@@ -58,12 +58,12 @@ function ConnectWallet() {
     return provider.getSigner();
   }
   function test() {
-    console.log("signer--", getSigner(), contractaddress);
+    console.log("signer--", getSigner(), mumbaicontractaddress);
     connecttocontract();
   }
 async function connecttocontract(){
     const provider = new ethers.providers.JsonRpcProvider(); //("HTTP://127.0.0.1:7545"); //localhost on 7545
-    const contract = new ethers.Contract(contractaddress, ContractABI.abi, getSigner());
+    const contract = new ethers.Contract(mumbaicontractaddress, ContractABI.abi, getSigner());
     const data = await contract.fetchallprofiles(1);
     console.log('data--',data)
 }

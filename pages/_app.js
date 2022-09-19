@@ -8,6 +8,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebaseconfig";
 import Landing from "../components/landing/Landing";
 import "../styles/style.css";
+import ErrorBoundary from "../components/ErrorBoundary";
 
 function MyApp({ Component, pageProps }) {
   const [user, loading, error] = useAuthState(auth);
@@ -59,9 +60,11 @@ function MyApp({ Component, pageProps }) {
   }
 
   return (
-    <ChakraProvider>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <ErrorBoundary FallbackComponent={Landing}>
+      <ChakraProvider>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </ErrorBoundary>
   );
 }
 
